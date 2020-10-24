@@ -75,16 +75,16 @@ class War {
     }
 
     vikingAttack() {
-        let damage = this.vikingArmy.first().attack();
-        const saxonReceivedADamage = this.saxonArmy.first().receiveDamage(damage);
+        let damage = this.vikingArmy[0].attack();
+        const saxonReceivedADamage = this.saxonArmy[0].receiveDamage(damage);
         this.saxonArmy = this.saxonArmy.filter(saxon => saxon.health > 0);
 
         return saxonReceivedADamage;
     }
 
     saxonAttack() {
-        let damage = this.saxonArmy.first().attack();
-        const vikingReceivedDamage = this.vikingArmy.first().receiveDamage(damage);
+        let damage = this.saxonArmy[0].attack();
+        const vikingReceivedDamage = this.vikingArmy[0].receiveDamage(damage);
         this.vikingArmy = this.vikingArmy.filter(viking => viking.health > 0);
 
         return vikingReceivedDamage;

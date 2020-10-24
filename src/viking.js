@@ -22,23 +22,23 @@ class Soldier {
 
 // Viking
 class Viking extends Soldier {
-    name
+    name;
     constructor(name, health, strength) {
         super(health, strength);
-        this.name = name
+        this.name = name;
     }
 
     receiveDamage(damage) {
-        super.receiveDamage(damage)
+        super.receiveDamage(damage);
 
         if (this.health > 0) {
             return `${this.name} has received ${damage} points of damage`;
         }
 
-        return `${this.name} has died in act of combat`
+        return `${this.name} has died in act of combat`;
     }
 
-    battelCry() {
+    battleCry() {
         return 'Odin Owns You All!'
     }
 
@@ -47,7 +47,7 @@ class Viking extends Soldier {
 // Saxon
 class Saxon extends Soldier {
     attack() {
-        return this.strength
+        return this.strength;
     }
 
     receiveDamage(damage) {
@@ -63,8 +63,8 @@ class Saxon extends Soldier {
 
 // War
 class War {
-    vikingArmy
-    saxonArmy
+    vikingArmy;
+    saxonArmy;
 
     constructor() {
         this.vikingArmy = [];
@@ -72,10 +72,50 @@ class War {
     }
 
     addViking(viking) {
-        this.vikingArmy.push(viking)
+        this.vikingArmy.push(viking);
     }
 
     addSaxon(saxon) {
-        this.vikingArmy.push(saxon)
+        this.vikingArmy.push(saxon);
+    }
+
+    vikingAttack() {
+        let damage = this.vikingArmy.first().attack()
+
+        this.saxonArmy.forEach(saxon => {
+                saxon.receiveDamage(damage);
+            }
+        )
+
+        this.saxonArmy = this.saxonArmy.filter(saxon => saxon.health > 0);
+    }
+
+    saxonAttack() {
+        let damage = this.saxonArmy.first().attack();
+
+        this.vikingArmy.forEach(viking => {
+                viking.receiveDamage(damage);
+            }
+        )
+
+        this.vikingArmy = this.vikingArmy.filter(viking => viking.health > 0);
+    }
+
+    showStatus() {
+        const areVikingsAlive = this.vikingArmy.length > 0;
+        const areSaxonsAlive = this.saxonArmy.length > 0;
+
+        if (areVikingsAlive && areSaxonsAlive) {
+            return 'Vikings and Saxons are still in the thick of battle.';
+        }
+
+        if (!areVikingsAlive) {
+            return 'Saxons have fought for their lives and survived another day...';
+
+        }
+
+        if (!areSaxonsAlive) {
+            return 'Vikings have won the war of the century!';
+        }
     }
 }

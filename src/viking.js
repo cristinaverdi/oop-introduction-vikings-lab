@@ -46,22 +46,17 @@ class Viking extends Soldier {
 
 // Saxon
 class Saxon extends Soldier {
-    attack() {
-        return this.strength;
-    }
-
     receiveDamage(damage) {
         super.receiveDamage(damage);
 
         if(this.health > 0) {
-            return 'A Saxon has received ${damage} points of damage';
+            return `A Saxon has received ${damage} points of damage`;
         }
 
         return 'A Saxon has died in combat';
     }
 }
 
-// War
 class War {
     vikingArmy;
     saxonArmy;
@@ -76,29 +71,23 @@ class War {
     }
 
     addSaxon(saxon) {
-        this.vikingArmy.push(saxon);
+        this.saxonArmy.push(saxon);
     }
 
     vikingAttack() {
-        let damage = this.vikingArmy.first().attack()
-
-        this.saxonArmy.forEach(saxon => {
-                saxon.receiveDamage(damage);
-            }
-        )
-
+        let damage = this.vikingArmy.first().attack();
+        const saxonReceivedADamage = this.saxonArmy.first().receiveDamage(damage);
         this.saxonArmy = this.saxonArmy.filter(saxon => saxon.health > 0);
+
+        return saxonReceivedADamage;
     }
 
     saxonAttack() {
         let damage = this.saxonArmy.first().attack();
-
-        this.vikingArmy.forEach(viking => {
-                viking.receiveDamage(damage);
-            }
-        )
-
+        const vikingReceivedDamage = this.vikingArmy.first().receiveDamage(damage);
         this.vikingArmy = this.vikingArmy.filter(viking => viking.health > 0);
+
+        return vikingReceivedDamage;
     }
 
     showStatus() {
